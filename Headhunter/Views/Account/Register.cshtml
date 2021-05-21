@@ -1,0 +1,117 @@
+﻿@model Headhunter.ViewModels.RegisterViewModel
+
+
+@{
+    ViewBag.Title = "Регистрация ";
+    Layout = "_Layout";
+}
+<div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+        <h2>Регистрация нового пользователя</h2>
+        <form method="post" asp-controller="Account" asp-action="Register" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly"></div>
+
+            <label asp-for="Role">В качестве кого регистрируетесь?</label>
+            <select id="list" class="form-control mb-4" asp-for="Role" onchange="change()">
+                <option ></option>
+                <option value="seeker">соискателя</option>
+                <option value="employer">компании</option>
+            </select>
+            <div>
+                <span asp-validation-for="UserName"></span>
+                <label id="username"></label><br/>
+                <input class="form-control mb-4" asp-for="UserName"/>
+            </div>
+            <div>
+                <span asp-validation-for="Email"></span>
+                <label asp-for="Email"></label><br/>
+                <input class="form-control mb-4" asp-for="Email"/>
+            </div>
+            <div>
+                <span asp-validation-for="PhoneNumber"></span>
+                <label asp-for="PhoneNumber"></label><br/>
+                <input class="form-control mb-4" asp-for="PhoneNumber"/>
+            </div>
+            <div>
+                <span asp-validation-for="FormFile"></span>
+                <label asp-for="FormFile"></label><br/>
+                <input asp-for="FormFile"/>
+
+            </div>
+            <div>
+                <div class="form-group">
+                    <span asp-validation-for="Password"></span>
+                    <label asp-for="Password"></label><br/>
+                    <div class="input-group">
+                        <input id="password" type="password" placeholder="Пароль" class="form-control" asp-for="Password"/>
+                        <div class="input-group-addon" id="s-h-pass">
+                            <span >
+                                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                
+                <div class="form-group">
+                    <span asp-validation-for="PasswordConfirm"></span> 
+                    <label asp-for="PasswordConfirm"></label><br/>
+                    <div class="input-group">
+                        <input id="passwordConfirm" type="password" placeholder="Пароль" class="form-control" asp-for="PasswordConfirm"/>
+                        <div class="input-group-addon" id="s-h-passconfirm"><span > <i class="fa fa-eye-slash" aria-hidden="true"></i></span></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <br/>
+                <input class="btn btn-info btn-block my-4" type="submit" value="Регистрация"/>
+            </div>
+        </form>
+        
+
+    </div>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+    
+     function change() {
+        	var z = document.getElementById("list").value;
+        	if (z == "seeker"){
+        	    document.getElementById("username").innerHTML = "Имя   " + "соискателя" ;
+        	}
+        	 else {
+        	     document.getElementById("username").innerHTML = "Название компании " ;
+        	 }	
+        }	
+       
+                $( document ).ready(function() {
+                 $('#s-h-passconfirm').click(function(){
+                     var type = $('#passwordConfirm').attr('type') == "text" ? "password" : 'text',
+                         c = $(this).html() == "<i class=\"fa fa-eye\" aria-hidden=\"true\"></i>" ?
+                          "<i class=\"fa fa-eye-slash\" aria-hidden=\"true\"></i>" :
+                           "<i class=\"fa fa-eye\" aria-hidden=\"true\"></i>";
+                     $(this).html(c);
+                     $('#passwordConfirm').prop('type', type);
+                 });
+             });
+             
+            $( document ).ready(function() {
+                             $('#s-h-pass').click(function(){
+                                 var type = $('#password').attr('type') == "text" ? "password" : 'text',
+                                     c = $(this).html() == "<i class=\"fa fa-eye\" aria-hidden=\"true\"></i>" ?
+                                      "<i class=\"fa fa-eye-slash\" aria-hidden=\"true\"></i>" :
+                                       "<i class=\"fa fa-eye\" aria-hidden=\"true\"></i>";
+                                 $(this).html(c);
+                                 $('#password').prop('type', type);
+                             });
+                         }); 
+             
+             
+         </script>
+}

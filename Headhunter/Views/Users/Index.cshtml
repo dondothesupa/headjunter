@@ -1,0 +1,110 @@
+﻿@inject UserManager<User> UserManager
+@using Microsoft.AspNetCore.Identity
+@model User
+
+@{
+    ViewBag.Title = "Личный кабинет";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-6">
+        <img style="width: 100px; height: 100px;border-radius: 50%;border: solid 4px yellow;margin-top: 15px;" src="~/@Model.AvatarPath" alt="аватар пользователя">
+    </div>
+    <div class="col-6" style="margin-left: -400px;">
+        <h2> Пользователь :@Model.UserName </h2>
+        <h3>Email : @Model.Email</h3>
+        <h3>Телефон : @Model.PhoneNumber</h3>
+    </div>
+    
+    <div class="col-6" style="margin-left: 550px; margin-top: -114px;">
+        @if (UserManager.GetUserId(User) == @Model.Id)
+        {
+            <button type="button" class="btn btn-info btn-rounded btn-lg" data-toggle="modal" data-target="#exampleModalLong">
+                Редактировать
+            </button>
+
+            <input type="button" class="btn btn-danger btn-rounded btn-lg"
+                   role="button" onclick="del('@Model.Id')" value="Удалить аккаунт"/>
+
+            @if (User.IsInRole("seeker"))
+            {
+                <a class="btn badge-primary btn-rounded btn-lg" style="margin-top: 10px" asp-action="Create" asp-controller="Summaries">Создать Резюме</a>
+            }
+            @if (User.IsInRole("employer"))
+            {
+                <a class="btn badge-primary btn-rounded btn-lg" style="margin-top: 10px" asp-action="Create" asp-controller="Vacancies">Создать Вакансию</a>
+            }
+        }
+            </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle" style="text-align: center">Редактирование профиля</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label asp-for="Email">Email</label>
+                                        <input class="form-control" asp-for="Email" type="email">
+                                        <span asp-validation-for="Email"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="UserName">Логин пользователя</label>
+                                        <input class="form-control" asp-for="UserName" type="text">
+                                        <span asp-validation-for="UserName"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="PhoneNumber">Номер телофона</label>
+                                        <input class="form-control" asp-for="PhoneNumber" type="text">
+                                        <span asp-validation-for="PhoneNumber"></span>
+                                    </div>
+                                    @* <div class="form-group"> *@
+                                    @*     <label asp-for="File">Фото</label><br/> *@
+                                    @*     <input class="form-control-file" asp-for="File"/> *@
+                                    @*     <span asp-validation-for="File"></span> *@
+                                    @* </div> *@
+                                    <input type="hidden" asp-for="AvatarPath">
+                                    <input type="hidden" asp-for="Id">
+                                    <input type="hidden" value="@Model.Id"/>
+                                    <input type="submit" value="Сохранить" class="btn btn-outline-dark">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+@section Scripts
+{<script>
+function del(userId){ 
+if(confirm("Вы действительно хотите удалить аккаунт ?")) {
+                 $.ajax({
+                   url: '@Url.Action("Delete", "Users")',
+                   type: 'GET',
+                   data: {'userId': userId }
+                         });
+$.ajax({
+                   url: '@Url.Action("LogOff", "Account")',
+                   type: 'POST',
+                   data: {}
+                         });
+ location.replace("http://localhost:5000/");
+
+ } else {
+    alert('Ничего страшного, в следующий раз удалите');
+            
+ }
+    }
+
+ </script>
+
+}

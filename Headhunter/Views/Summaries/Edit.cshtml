@@ -1,0 +1,100 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model Headhunter.ViewModels.SummaryCreateViewModel
+@inject UserManager<User> UserManager
+@{
+    ViewBag.Title = "Редактирование";
+    Layout = "_Layout";
+}
+
+<h2>Редактирование резюме</h2>
+<div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+        
+        <form method="post" asp-controller="Summaries" asp-action="Edit">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div>
+                <span asp-validation-for="NamePosts"></span>
+                <label asp-for="NamePosts"></label><br/>
+                <input class="form-control mb-4" asp-for="NamePosts"/>
+            </div>
+            <div>
+                <span asp-validation-for="Name"></span>
+                <label asp-for="Name"></label><br/>
+                <input class="form-control mb-4" asp-for="Name"/>
+            </div>
+            <div>
+                <span asp-validation-for="SurName"></span>
+                <label asp-for="SurName"></label><br/>
+                <input class="form-control mb-4" asp-for="SurName"/>
+            </div>
+            <div>
+                <span asp-validation-for="Email"></span>
+                <label asp-for="Email"></label><br/>
+                <input class="form-control mb-4" asp-for="Email"/>
+            </div>
+            <div>
+                <span asp-validation-for="Telegram"></span>
+                <label asp-for="Telegram"></label><br/>
+                <input class="form-control mb-4" asp-for="Telegram"/>
+            </div>
+            <div>
+                <span asp-validation-for="PhoneNumber"></span>
+                <label asp-for="PhoneNumber"></label><br/>
+                <input class="form-control mb-4" asp-for="PhoneNumber"/>
+            </div>
+            <div>
+                <span asp-validation-for="NameCompany"></span>
+                <label asp-for="NameCompany"></label><br/>
+                <input class="form-control mb-4" asp-for="NameCompany"/>
+            </div>
+            <div>
+                <span asp-validation-for="YearsOfWork"></span>
+                <label asp-for="YearsOfWork"></label><br/>
+                <input class="form-control mb-4" asp-for="YearsOfWork"/>
+            </div>
+            <div>
+                <span asp-validation-for="Position"></span>
+                <label asp-for="Position"></label><br/>
+                <textarea class="form-control mb-4" asp-for="Position"></textarea>
+            </div>
+            <div>
+                <span asp-validation-for="Duties"></span>
+                <label asp-for="Duties"></label><br/>
+                <input class="form-control mb-4" asp-for="Duties"/>
+            </div>
+            <div>
+                <span asp-validation-for="Education"></span>
+                <label asp-for="Education"></label><br/>
+                <input class="form-control mb-4" asp-for="Education"/>
+            </div>
+            <div>
+                <span asp-validation-for="CousesTaken"></span>
+                <label asp-for="CousesTaken"></label><br/>
+                <input class="form-control mb-4" asp-for="CousesTaken"/>
+            </div>
+            <div>
+                <span asp-validation-for="ExpectedSalary"></span>
+                <label asp-for="ExpectedSalary"></label><br/>
+                <input class="form-control mb-4" asp-for="ExpectedSalary"/>
+            </div>
+
+            <label >Категория вакансии</label>
+            <select id="list" class="form-control mb-4" asp-for="CategoryId">
+                @foreach (var cat in @Model.Category)
+                {
+                    <option value="@cat.Id">@cat.Name</option>
+                }
+            </select>
+            <div>
+                <br/>
+                <input class="btn btn-info btn-block my-4" type="submit" value="Сохранить изменения"/>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

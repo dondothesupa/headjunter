@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model Headhunter.ViewModels.VacancyCreateViewModel
+@inject UserManager<User> UserManager
+
+@{
+    ViewBag.Title = "Редактирование вакансии";
+    Layout = "_Layout";
+}
+
+<h2>Редактирование вакансии</h2>
+<div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+
+        <form method="post" asp-controller="Vacancies" asp-action="Edit">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div>
+                <span asp-validation-for="Name"></span>
+                <label asp-for="Name"></label><br/>
+                <input class="form-control mb-4" asp-for="Name"/>
+            </div>
+            <div>
+                <span asp-validation-for="Description"></span>
+                <label asp-for="Description"></label><br/>
+                <textarea class="form-control mb-4" asp-for="Description"></textarea>
+            </div>
+            <div>
+                <span asp-validation-for="Salary"></span>
+                <label asp-for="Salary"></label><br/>
+                <input class="form-control mb-4" asp-for="Salary"/>
+            </div>
+            <div>
+                <span asp-validation-for="WorkExperience"></span>
+                <label asp-for="WorkExperience"></label><br/>
+                <input class="form-control mb-4" asp-for="WorkExperience"/>
+
+            </div>
+            <label >Категория вакансии</label>
+            <select id="list" class="form-control mb-4" asp-for="CategoryId">
+                <option value="@Model.Categ.Id">@Model.Categ.Name</option>
+                @foreach (var cat in @Model.Category)
+                {
+                    <option value="@cat.Id">@cat.Name</option>
+                }
+            </select>
+            <div>
+                <br/>
+                <input class="btn btn-info btn-block my-4" type="submit" value="Сохранить изменения"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

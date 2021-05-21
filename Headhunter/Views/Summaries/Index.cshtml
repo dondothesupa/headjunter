@@ -1,0 +1,23 @@
+﻿@model Summary
+
+@{
+    ViewBag.Title = "Резюме";
+    Layout = "_Layout";
+}
+
+<h2>Резюме соискателя</h2>
+<h3>Название резюме: @Model.NamePosts</h3>
+<h3>Имя : @Model.Name</h3>
+<h3>Фамиля : @Model.SurName</h3>
+<h3>Телефон номер : @Model.PhoneNumber</h3>
+<h3>Email адресс : @Model.Email</h3>
+<h3>Телеграмм ссылка : <a href="#">@Model.Telegram</a></h3>
+<h3>Компания где работал :@Model.NameCompany</h3>
+<h3>Опот работы : @Model.YearsOfWork</h3>
+<h3>Должность работал : @Model.Position</h3>
+<h3>Обязности работал : @Model.Duties</h3>
+<h3>Категория : @Model.Category.Name</h3>
+<h3>Желаемый Зарплата : @Model.ExpectedSalary</h3>
+<h3>Дата создания/обновления : @Model.DateOfCreator </h3>
+<h3>Доступность к публикации : @Model.IsPublic </h3>
+<h3>Соискатель : @Model.Employer</h3>

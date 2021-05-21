@@ -1,0 +1,40 @@
+﻿@model List<Summary>
+
+@{
+    ViewBag.Title = "Все резюме";
+    Layout = "_Layout";
+}
+
+<h2>Все вакансии</h2>
+<table style="width: 100%">
+    <tr>
+        <td>Название</td>
+        <td>Дата обновления</td>
+        <td>Действия</td>
+    </tr>
+
+    @foreach (var vac in @Model)
+    {
+        <tr>
+            <td>
+                <a  asp-action="Index" asp-controller="Summaries" asp-route-id="@vac.Id">
+                    @vac.NamePosts   
+                </a>
+            </td>
+            <td>@vac.DateOfCreator</td>
+            <td>
+                <a class="btn badge-primary btn-rounded btn-lg" asp-action="UpDate" asp-controller="Summaries" asp-route-id="@vac.Id">Обновить</a>
+                <a class="btn badge-primary btn-rounded btn-lg" asp-action="Edit" asp-controller="Summaries" asp-route-id="@vac.Id">Редактировать</a>
+                @if (@vac.IsPublic)
+                {
+                    <a class="btn  btn-danger btn-lg" asp-action="Publish" asp-controller="Summaries" asp-route-id="@vac.Id">Снять</a>
+                }
+                else{
+                    <a class="btn badge-primary badge-info btn-lg" asp-action="Publish" asp-controller="Summaries" asp-route-id="@vac.Id">Опубликовать</a>
+                }
+                <a class="btn badge-primary btn-rounded btn-lg" asp-action="ChatMessage" asp-controller="Users" asp-route-id="@vac.Id">Сообщения</a>
+            </td>
+        </tr>
+    }
+    
+</table>

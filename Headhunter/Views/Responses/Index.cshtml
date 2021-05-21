@@ -1,0 +1,42 @@
+﻿@model List<Response>
+
+
+@{
+    ViewBag.Title = "Отзывы на вакансию";
+    Layout = "_Layout";
+}
+
+<h2>Все отзывы на вакансию </h2>
+<table style="width: 100%">
+    <tr>
+        <td>Соискатель</td>
+        <td>Резюме</td>
+        <td>Сопроводительное письмо</td>
+        <td>Действия</td>
+    </tr>
+
+    @foreach (var response in @Model)
+    {
+        <tr>
+            <td>
+                <a asp-action="Index" asp-controller="Users" asp-route-userId="@response.Employer.Id">
+                    @response.Employer.UserName
+                </a>
+            </td>
+            <td>
+                <a asp-action="Index" asp-controller="Summaries" asp-route-id="@response.SummaryId">
+                    @response.Summary.NamePosts
+                </a>
+            </td>
+            <td>
+                @response.Description
+            </td>
+            
+            <td>
+                 <a class="btn badge-primary btn-rounded btn-lg" asp-action="ChatMessage" asp-controller="Users" asp-route-id="@response.Employer.Id">Открыть чат</a>
+            </td>
+            
+        </tr>
+    }
+    
+</table>

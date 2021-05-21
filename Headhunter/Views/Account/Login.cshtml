@@ -1,0 +1,60 @@
+﻿@model Headhunter.ViewModels.LoginViewModel
+
+
+<h2>Вход в приложение</h2>
+<div class="container my-5 py-5 z-depth-1">
+    <section class="px-md-5 mx-md-5 text-center text-lg-left dark-grey-text">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                @ViewBag.Answer
+                <form method="post" asp-controller="Account" asp-action="Login"
+                      asp-route-returnUrl="@Model.ReturnUrl">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <div>
+                        <label asp-for="Login"></label><br/>
+                        <input class="form-control mb-4" asp-for="Login"/>
+                        <span asp-validation-for="Login"></span>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label asp-for="Password"></label><br/>
+                            <div class="input-group">
+                                <input id="password" type="password"  class="form-control" asp-for="Password"/>
+                                <div class="input-group-addon" id="s-h-pass"><span > <i class="fa fa-eye-slash" aria-hidden="true"></i></span></div>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Password"></span>
+                    </div>
+                    <div>
+                        <input asp-for="RememberMe"/>
+                        <label asp-for="RememberMe"></label>
+                    </div>
+                    <div>
+                        <input class="btn btn-info btn-block my-4" type="submit" value="Войти"/>
+                    </div>
+                </form>
+                <a class="btn btn-outline-info  btn-block my-4"   asp-controller="Account" asp-action="Register" 
+                   role="button">Зарегистрироваться</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+      <script>
+             $( document ).ready(function() {
+                 $('#s-h-pass').click(function(){
+                     var type = $('#password').attr('type') == "text" ? "password" : 'text',
+                         c = $(this).html() == "<i class=\"fa fa-eye\" aria-hidden=\"true\"></i>" ?
+                          "<i class=\"fa fa-eye-slash\" aria-hidden=\"true\"></i>" :
+                           "<i class=\"fa fa-eye\" aria-hidden=\"true\"></i>";
+                     $(this).html(c);
+                     $('#password').prop('type', type);
+                 });
+             });
+         </script>
+}

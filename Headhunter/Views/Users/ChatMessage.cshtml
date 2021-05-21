@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model User
+@inject UserManager<User> UserManager
+
+<div class="" style="text-align: center">
+	@{
+		await Html.RenderPartialAsync("PartialView/MessagePartialView", Model);
+	}
+</div>
+
+@section Scripts
+{
+	<script>
+    function openForm(userId) {
+       $("#answerdiv-" + userId).show();
+    }
+    function sendMessage(userId) {
+        $("#userId-" + userId).val();
+      $.ajax({
+        url : '@Url.Action("Message" , "Users")',
+        type : 'POST',
+        data : {
+            'userId' : userId,
+            'message' : $("#answertext-" + userId).val()
+        },
+        success: function(data) {
+            $("#result").html(data);
+        }
+      })
+    }
+    </script>
+}
